@@ -1,8 +1,2 @@
-# dependencies
-/node_modules
-
-# Config folder
-/config
-
 # Misc
 .DS_Store
