@@ -1,2 +1,5 @@
+# Git directory for heroku deployment 
+server/.git/
+
 # Misc
 .DS_Store

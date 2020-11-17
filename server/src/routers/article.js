@@ -12,8 +12,6 @@ router.get(
     auth,
     async (req, res) => {
 
-        console.log(req.user)
-
         // Search options
         // https://mongoosejs.com/docs/api.html#query_Query-setOptions
         const limit = isNaN(req.query.limit) ? null : parseInt(req.query.limit)
