@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 
+// Database url
+const url = process.env.MONGODB_URL + '/' + process.env.MONGODB_DB_NAME
+
+// Connection to database
 mongoose.connect(
-    process.env.MONGODB_URL,
+    url,
     {
         useUnifiedTopology: true,
         useNewUrlParser: true,
@@ -10,4 +14,4 @@ mongoose.connect(
     }
 )
 
-console.log(`Connectiong to MongDB at ${process.env.MONGODB_URL}`)
+console.log(`Connection to ${process.env.MONGODB_DB_NAME} MongoDB at ${url}`)
