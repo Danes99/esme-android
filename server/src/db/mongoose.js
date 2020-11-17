@@ -1,3 +1,5 @@
+// Require downloaded modules
+const chalk = require('chalk')
 const mongoose = require('mongoose')
 
 // Database url
@@ -14,4 +16,4 @@ mongoose.connect(
     }
 )
 
-console.log(`Connection to ${process.env.MONGODB_DB_NAME} MongoDB at ${url}`)
+console.log(`Connection to ${chalk.green.bold(process.env.MONGODB_DB_NAME)} MongoDB @ ${chalk.yellow.italic(url)}`)
