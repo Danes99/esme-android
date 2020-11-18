@@ -9,5 +9,5 @@ const app =  require('./src/app')
 
 app.listen(
     port,
-    () => console.log(`Server is up on ${chalk.cyan.bold(port)}`)
+    () => console.log(`Server is up on port ${chalk.cyan.bold(port)}`)
 )
