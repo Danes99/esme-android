@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
-const jwt = require ('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
-const Task = require('./task')
+const Article = require('./article')
 
-const userSchema  = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
-        name: { 
+        name: {
             type: String,
             required: true,
             trim: true
@@ -18,21 +18,17 @@ const userSchema  = new mongoose.Schema(
             required: true,
             trim: true,
             lowercase: true,
-            validate(value)
-            {
-                if (!validator.isEmail(value))
-                {
+            validate(value) {
+                if (!validator.isEmail(value)) {
                     throw new Error('Email is invalid')
                 }
             }
         },
-        age: { 
+        age: {
             type: Number,
             default: 0,
-            validate(value)
-            {
-                if (value < 0)
-                {
+            validate(value) {
+                if (value < 0) {
                     throw new Error('Age must be a positive number')
                 }
             }
@@ -42,10 +38,8 @@ const userSchema  = new mongoose.Schema(
             required: true,
             trim: true,
             minlength: 7,
-            validate(value)
-            {
-                if (value.toLowerCase().includes('password'))
-                {
+            validate(value) {
+                if (value.toLowerCase().includes('password')) {
                     throw new Error("Password must not contain the word 'password'")
                 }
             }
@@ -68,16 +62,15 @@ const userSchema  = new mongoose.Schema(
 )
 
 userSchema.virtual(
-    'tasks',
+    'articles',
     {
-        ref: 'Task',
+        ref: 'Article',
         localField: '_id',
         foreignField: 'owner'
     }
 )
 
-userSchema.methods.toJSON = function ()
-{
+userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
 
@@ -88,8 +81,7 @@ userSchema.methods.toJSON = function ()
     return userObject
 }
 
-userSchema.methods.generateAuthToken = async function ()
-{
+userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign(
         { _id: user._id.toString() },
@@ -102,8 +94,7 @@ userSchema.methods.generateAuthToken = async function ()
     return token
 }
 
-userSchema.statics.findByCredentials = async (email, password) =>
-{
+userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
     if (!user) {
@@ -122,8 +113,7 @@ userSchema.statics.findByCredentials = async (email, password) =>
 // Hash the plain text password before saving
 userSchema.pre(
     'save',
-    async function (next)
-    {
+    async function (next) {
         const user = this
 
         if (user.isModified('password')) {
@@ -134,14 +124,13 @@ userSchema.pre(
     }
 )
 
-// Delete user tasks when user is removed
+// Delete user articles when user is removed
 userSchema.pre(
     'remove',
-    async function (next)
-    {
+    async function (next) {
         const user = this
 
-        await Task.deleteMany({ owner: user._id })
+        await Article.deleteMany({ owner: user._id })
 
         next()
     }
