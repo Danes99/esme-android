@@ -1,5 +1,8 @@
 # Git directory for heroku deployment 
 server/.git/
 
+# Visual studio code project settings
+/.vscode
+
 # Misc
 .DS_Store
