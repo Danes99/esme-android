@@ -35,12 +35,12 @@ router.get(
 
         try {
             // https://mongoosejs.com/docs/api.html#model_Model.find
-            const articles = await Article.find({ 
+            const articles = await Article.find({
                 owner: req.user._id, ...match
             })
-            .limit(limit)
-            .skip(skip)
-            .sort(sort)
+                .limit(limit)
+                .skip(skip)
+                .sort(sort)
 
             if (!articles) {
                 return res.status(404).send([])

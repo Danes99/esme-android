@@ -4,17 +4,17 @@ const mongoose = require('mongoose')
 // Article Schema
 const schemaArticle = new mongoose.Schema(
     {
-        title: { 
+        title: {
             type: String,
             required: true,
             trim: true
         },
-        content: { 
+        content: {
             type: String,
             required: true,
             trim: true
         },
-        completed: { 
+        completed: {
             type: Boolean,
             default: false
         },

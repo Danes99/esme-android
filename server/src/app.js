@@ -1,5 +1,5 @@
 // Require downloaded modules
-const express  = require('express')
+const express = require('express')
 
 // Require routers
 const userRouter = require('./routers/user')

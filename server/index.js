@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const port = process.env.PORT
 
 // Import Server
-const app =  require('./src/app')
+const app = require('./src/app')
 
 app.listen(
     port,

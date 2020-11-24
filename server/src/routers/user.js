@@ -13,10 +13,8 @@ const upload = multer(
         limits: {
             fileSize: 1000000
         },
-        fileFilter(req, file, cb)
-        {
-            if (!file.originalname.match(/\.(jpg|jpeg|png)/))
-            {
+        fileFilter(req, file, cb) {
+            if (!file.originalname.match(/\.(jpg|jpeg|png)/)) {
                 return cb(
                     new Error('Please upload a PDF')
                 )
@@ -29,19 +27,16 @@ const upload = multer(
 
 router.post(
     '/users',
-    async (req, res) => 
-    {
+    async (req, res) => {
         const user = new User(req.body)
 
-        try
-        {
+        try {
             const token = await user.generateAuthToken()
             await user.save()
 
             res.status(201).send({ user, token })
         }
-        catch (error)
-        {
+        catch (error) {
             res.status(400).send(error)
         }
     }
@@ -49,8 +44,7 @@ router.post(
 
 router.post(
     '/users/login',
-    async (req, res) =>
-    {
+    async (req, res) => {
         try {
             const user = await User.findByCredentials(
                 req.body.email,
@@ -69,19 +63,16 @@ router.post(
 router.post(
     '/users/logout',
     auth,
-    async (req, res) =>
-    {
-        try 
-        {
+    async (req, res) => {
+        try {
             req.user.tokens = req.user.tokens.filter(
                 token => token.token !== req.token
             )
             await req.user.save()
 
             res.send()
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
             res.status(500).send(error)
         }
     }
@@ -90,17 +81,14 @@ router.post(
 router.post(
     '/users/logoutAll',
     auth,
-    async (req, res) =>
-    {
-        try 
-        {
+    async (req, res) => {
+        try {
             req.user.tokens = []
             await req.user.save()
 
             res.send()
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
             res.status(500).send(error)
         }
     }
@@ -110,18 +98,16 @@ router.post(
     '/users/me/avatar',
     auth,
     upload.single('avatar'),
-    async (req, res) => 
-    {
+    async (req, res) => {
         const buffer = await sharp(req.file.buffer)
-        .resize({ width: 250, height: 250 }).png().toBuffer()
+            .resize({ width: 250, height: 250 }).png().toBuffer()
 
         req.user.avatar = buffer
 
         await req.user.save()
         res.send()
     },
-    (error, req, res, next) =>
-    {
+    (error, req, res, next) => {
         res.status(400).send({ error: error.message })
     }
 )
@@ -134,22 +120,18 @@ router.get(
 
 router.get(
     '/users/:id/avatar',
-    async (req, res) =>
-    {
-        try 
-        {
+    async (req, res) => {
+        try {
             const user = await User.findById(req.params.id)
 
-            if (!user || !user.avatar)
-            {
+            if (!user || !user.avatar) {
                 throw new Error()
             }
 
             res.set('Content-Type', 'image/png')
             res.send(user.avatar)
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
             res.status(404).send()
         }
     }
@@ -158,8 +140,7 @@ router.get(
 router.patch(
     '/users/me',
     auth,
-    async (req, res) =>
-    {
+    async (req, res) => {
         const allowedUpdates = ['name', 'email', 'password', 'age']
         const updates = Object.keys(req.body)
 
@@ -171,15 +152,13 @@ router.patch(
             return res.status(400).send({ error: 'Invalid updates!' })
         }
 
-        try 
-        {
+        try {
             updates.forEach(update => req.user[update] = req.body[update])
             await req.user.save()
 
             res.send(req.user)
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
             res.status(500).send(error)
         }
     }
@@ -188,15 +167,12 @@ router.patch(
 router.delete(
     '/users/me',
     auth,
-    async (req, res) =>
-    {
-        try 
-        {
+    async (req, res) => {
+        try {
             await req.user.remove()
             res.status(200).send(req.user)
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
             res.status(500).send()
         }
     }
@@ -205,8 +181,7 @@ router.delete(
 router.delete(
     '/users/me/avatar',
     auth,
-    async (req, res) => 
-    {
+    async (req, res) => {
         req.user.avatar = undefined
         await req.user.save()
         res.send()
