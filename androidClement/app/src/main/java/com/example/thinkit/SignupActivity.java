@@ -2,11 +2,19 @@ package com.example.thinkit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.thinkit.connection.APIThinkit;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -16,6 +24,10 @@ public class SignupActivity extends AppCompatActivity {
     private boolean isEmailValid = false;
     private boolean isNameValid = false;
     private boolean isPasswordValid = false;
+
+    private String mName;
+    private String mEmail;
+    private String mPassword;
 
 
     @Override
@@ -43,6 +55,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isNameValid = s.toString().length() > 0;
+                mName = s.toString();
                 setButton();
             }
 
@@ -61,6 +74,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isEmailValid = s.toString().length() > 0;
+                mEmail = s.toString();
                 setButton();
             }
 
@@ -79,6 +93,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isPasswordValid = s.toString().length() >= 7;
+                mPassword = s.toString();
                 setButton();
             }
 
@@ -87,6 +102,31 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+
+        mButton.setOnClickListener(
+                new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        try {
+
+                            APIThinkit api = new APIThinkit();
+                            Log.v("Email", mEmail);
+                            JSONObject response = api.signup(mName, mEmail, mPassword);
+
+                            String token = response.getString("token");
+
+                            // Go to new activity
+                            Intent MainActivity = new Intent(SignupActivity.this, MainActivity.class);
+                            MainActivity.putExtra("token", token);
+                            startActivity(MainActivity);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
 
     }
 

@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-
                         try {
 
                             APIThinkit api = new APIThinkit();
@@ -105,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }
         );

@@ -24,6 +24,7 @@ public class connectionREST extends AsyncTask {
     private String token;
     private String response;
     private JSONObject mBody;
+    private Boolean hasAuthorizationBeenSet = false;
 
     public connectionREST(String url, String method, JSONObject body) {
 
@@ -69,9 +70,22 @@ public class connectionREST extends AsyncTask {
 
             // JSON Web Token (JWT)
             // For authentication
-            if (token != null) {
+            if (token != null && !hasAuthorizationBeenSet) {
                 connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+                hasAuthorizationBeenSet = true;
             }
+
+            /*
+            try {
+                if (token != null && !hasAuthorizationBeenSet) {
+                    connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+                    hasAuthorizationBeenSet = true;
+                }
+            } finally {
+
+            }
+
+             */
 
             // This line makes the request
             InputStream responseStream = connection.getInputStream();
@@ -79,6 +93,10 @@ public class connectionREST extends AsyncTask {
             // Read the response form HTTP request
             response = readStream(responseStream);
             //Log.v("Response", response);
+
+            // Close HTTP Connection
+            connection.disconnect();
+            connection = null;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -184,6 +202,7 @@ public class connectionREST extends AsyncTask {
             // Now it's "open", we can set the request method, headers etc.
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("accept", "application/json");
+            connection.setRequestMethod("DELETE");
             connection.setDoInput(true);
 
         } catch (IOException e) {

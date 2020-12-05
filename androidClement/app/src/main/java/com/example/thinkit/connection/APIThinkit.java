@@ -1,5 +1,7 @@
 package com.example.thinkit.connection;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +75,7 @@ public class APIThinkit {
             // Synchronus Method
             // Wait for the response
             response = (String) connection.get();
+            Log.v("Response", response);
             json = new JSONObject(response);
 
         } catch (ExecutionException e) {
@@ -132,6 +135,121 @@ public class APIThinkit {
             // Synchronus Method
             // Wait for the response
             response = (String) connection.get();
+            json = new JSONObject(response);
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+    public JSONObject createArticle(String title, String content, Boolean completed, String token) {
+
+        // Request parameters
+        String url = "http://node-thinkit.herokuapp.com/article";
+        String method = "POST";
+        String response;
+
+        // Create the Request Body
+        JSONObject body = new JSONObject();
+        try {
+            body.put("title", title);
+            body.put("content", content);
+            body.put("completed", completed);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        connectionREST connection = new connectionREST(url, method, body);
+        connection.setToken(token);
+        connection.execute((Object) null);
+
+        JSONObject json = null;
+        try {
+
+            // Synchronus Method
+            // Wait for the response
+            response = (String) connection.get();
+            json = new JSONObject(response);
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+    public JSONObject updateArticle(String id, String title, String content, Boolean completed, String token) {
+
+        // Request parameters
+        String url = "http://node-thinkit.herokuapp.com/article/" + id;
+        String method = "PATCH";
+        String response;
+
+        // Create the Request Body
+        JSONObject body = new JSONObject();
+        try {
+            if (title != null) {
+                body.put("title", title);
+            }
+            if (content != null) {
+                body.put("content", content);
+            }
+            if (completed != null) {
+                body.put("completed", completed);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        connectionREST connection = new connectionREST(url, method, body);
+        connection.setToken(token);
+        connection.execute((Object) null);
+
+        JSONObject json = null;
+        try {
+
+            // Synchronus Method
+            // Wait for the response
+            response = (String) connection.get();
+            json = new JSONObject(response);
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+    public JSONObject deleteArticle(String id, String token) {
+
+        // HTTP request parameters
+        String url = "http://node-thinkit.herokuapp.com/article/" + id;
+        JSONObject json = null;
+
+        // Execute HTTP request
+        connectionREST connection = new connectionREST(url, "DELETE", null);
+        connection.setToken(token);
+        connection.execute((Object) null);
+
+        try {
+
+            // Synchronus Method
+            // Wait for the response
+            String response = (String) connection.get();
             json = new JSONObject(response);
 
         } catch (ExecutionException e) {
