@@ -45,6 +45,10 @@ router.post(
 router.post(
     '/users/login',
     async (req, res) => {
+
+        console.log("Body :")
+        console.log(req.body)
+
         try {
             const user = await User.findByCredentials(
                 req.body.email,
@@ -55,6 +59,7 @@ router.post(
             res.send({ user, token })
 
         } catch (error) {
+            console.log(error)
             res.status(400).send(error)
         }
     }
