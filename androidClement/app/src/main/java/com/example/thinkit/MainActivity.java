@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.thinkit.connection.APIThinkit;
 import com.example.thinkit.connection.connectionREST;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
@@ -22,25 +26,11 @@ public class MainActivity extends AppCompatActivity {
         token = getIntent().getStringExtra("token");
         Log.v("Token", token);
 
-        // Request parameters
-        String url = "http://node-thinkit.herokuapp.com/article";
-        String method = "GET";
+        APIThinkit api = new APIThinkit();
+        JSONArray response = api.readArticles(token);
 
-        // Connection
-        connectionREST connection = new connectionREST(url, method, null);
-        connection.setToken(token);
-        connection.execute((Object) null);
+        Log.v("Articles", String.valueOf(response));
 
-        try {
-            // Synchronus Method
-            // Wait for the response
-            String response = (String) connection.get();
-            Log.v("Article List", response);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
     }
 }

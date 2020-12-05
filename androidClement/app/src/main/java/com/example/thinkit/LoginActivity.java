@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.thinkit.connection.APIThinkit;
 import com.example.thinkit.connection.login;
 import com.example.thinkit.connection.connectionREST;
 
@@ -28,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isButtonEnabled = false;
     private boolean isEmailValid = false;
     private boolean isPasswordValid = false;
+
+    private String mEmail;
+    private String mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mEmail = s.toString();
                 isEmailValid = s.toString().length() > 0;
                 setButton();
             }
@@ -68,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mPassword = s.toString();
                 isPasswordValid = s.toString().length() >= 7;
                 setButton();
             }
@@ -83,48 +89,23 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        //login connection = new login("clement.stauner@gmail.com", "Computer0987");
-                        //connection.execute((Object) null);
-                        //String body = connection.getResponse();
-                        //Log.v("HTTP POST /users Body", body);
-
-                        String url = "http://node-thinkit.herokuapp.com/users/login";
-                        String method = "POST";
-                        String response;
-
-                        // Create the Request Body
-                        JSONObject body = new JSONObject();
-                        try {
-                            body.put("email", "clement.stauner@gmail.com");
-                            body.put("password", "Computer0987");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
 
                         try {
 
-                            connectionREST login = new connectionREST(url, method, body);
-                            login.execute((Object) null);
+                            APIThinkit api = new APIThinkit();
+                            JSONObject response = api.login(mEmail, mPassword);
 
-                            // Synchronus Method
-                            // Wait for the response
-                            response = (String) login.get();
-                            JSONObject json = new JSONObject(response);
-                            String token = json.getString("token");
+                            String token = response.getString("token");
 
                             // Go to new activity
                             Intent MainActivity = new Intent(LoginActivity.this, MainActivity.class);
                             MainActivity.putExtra("token", token);
                             startActivity(MainActivity);
 
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 }
         );
@@ -136,8 +117,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean isFormValid = isEmailValid && isPasswordValid;
 
         if (isFormValid != isButtonEnabled) {
-            isButtonEnabled = isFormValid;
-            mButton.setEnabled(isFormValid);
+            this.isButtonEnabled = isFormValid;
+            this.mButton.setEnabled(isFormValid);
         }
 
     }
