@@ -1,10 +1,11 @@
-package com.example.thinkit;
+package com.example.thinkit.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.thinkit.R;
 import com.example.thinkit.connection.APIThinkit;
 import com.example.thinkit.connection.connectionREST;
 

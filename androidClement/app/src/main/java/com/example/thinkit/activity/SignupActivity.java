@@ -1,4 +1,4 @@
-package com.example.thinkit;
+package com.example.thinkit.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.thinkit.R;
 import com.example.thinkit.connection.APIThinkit;
 
 import org.json.JSONException;
@@ -117,7 +118,7 @@ public class SignupActivity extends AppCompatActivity {
                             String token = response.getString("token");
 
                             // Go to new activity
-                            Intent MainActivity = new Intent(SignupActivity.this, MainActivity.class);
+                            Intent MainActivity = new Intent(SignupActivity.this, com.example.thinkit.activity.MainActivity.class);
                             MainActivity.putExtra("token", token);
                             startActivity(MainActivity);
 
