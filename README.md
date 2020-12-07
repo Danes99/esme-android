@@ -3,4 +3,4 @@ hi
 
 # Architecture
 
-<img src="./docs/architecture/architecture.svg"/>
+<img src="./docs/architecture/architecture.png"/>
