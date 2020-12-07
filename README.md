@@ -1,4 +1,6 @@
-# Hello
+# Thinkit
 hi
 
- ### Test andoridBenjamin   
+# Architecture
+
+<img src="./docs/architecture/architecture.svg"/>
