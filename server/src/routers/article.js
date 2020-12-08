@@ -108,7 +108,7 @@ router.patch(
     auth,
     async (req, res) => {
         const updates = Object.keys(req.body)
-        const allowedUpdates = ['completed', 'content', 'title']
+        const allowedUpdates = ['completed', 'content', 'title', 'isFavorite']
 
         const isValidOperation = updates.every(
             update => allowedUpdates.includes(update)
