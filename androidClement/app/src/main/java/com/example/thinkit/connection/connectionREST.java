@@ -68,25 +68,6 @@ public class connectionREST extends AsyncTask {
                     throw new IllegalStateException("Unexpected value: " + this.mMethod);
             }
 
-            // JSON Web Token (JWT)
-            // For authentication
-            if (token != null && !hasAuthorizationBeenSet) {
-                connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
-                hasAuthorizationBeenSet = true;
-            }
-
-            /*
-            try {
-                if (token != null && !hasAuthorizationBeenSet) {
-                    connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
-                    hasAuthorizationBeenSet = true;
-                }
-            } finally {
-
-            }
-
-             */
-
             // This line makes the request
             InputStream responseStream = connection.getInputStream();
 
@@ -116,6 +97,13 @@ public class connectionREST extends AsyncTask {
         try {
             connection = (HttpURLConnection) url.openConnection();
 
+            // JSON Web Token (JWT)
+            // For authentication
+            if (token != null && !hasAuthorizationBeenSet) {
+                connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+                hasAuthorizationBeenSet = true;
+            }
+
             // Now it's "open", we can set the request method, headers etc.
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("accept", "application/json");
@@ -140,6 +128,13 @@ public class connectionREST extends AsyncTask {
         // Open a connection(?) on the URL(??) and cast the response(???)
         try {
             connection = (HttpURLConnection) url.openConnection();
+
+            // JSON Web Token (JWT)
+            // For authentication
+            if (token != null && !hasAuthorizationBeenSet) {
+                connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+                hasAuthorizationBeenSet = true;
+            }
 
             // Now it's "open", we can set the request method, headers etc.
             connection.setRequestProperty("Content-Type", "application/json");
@@ -171,10 +166,17 @@ public class connectionREST extends AsyncTask {
         try {
             connection = (HttpURLConnection) url.openConnection();
 
+            // JSON Web Token (JWT)
+            // For authentication
+            if (token != null && !hasAuthorizationBeenSet) {
+                connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+                hasAuthorizationBeenSet = true;
+            }
+
             // Now it's "open", we can set the request method, headers etc.
+            connection.setRequestMethod("PATCH");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("accept", "application/json");
-            connection.setRequestMethod("PATCH");
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
@@ -199,6 +201,13 @@ public class connectionREST extends AsyncTask {
         try {
             connection = (HttpURLConnection) url.openConnection();
 
+            // JSON Web Token (JWT)
+            // For authentication
+            if (token != null && !hasAuthorizationBeenSet) {
+                connection.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+                hasAuthorizationBeenSet = true;
+            }
+
             // Now it's "open", we can set the request method, headers etc.
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("accept", "application/json");
@@ -212,6 +221,7 @@ public class connectionREST extends AsyncTask {
         return connection;
     }
 
+    // Write the body of the HTTP request
     private void writeStream(OutputStream os, String jsonInputString) throws IOException {
         // Write request body
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -220,8 +230,9 @@ public class connectionREST extends AsyncTask {
         os.close();
     }
 
-    // https://stackoverflow.com/questions/8376072/whats-the-readstream-method-i-just-can-not-find-it-anywhere/17167640#17167640
+    // Read the HTTP request response
     private String readStream(InputStream is) throws IOException {
+        // https://stackoverflow.com/questions/8376072/whats-the-readstream-method-i-just-can-not-find-it-anywhere/17167640#17167640
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is),1000);
         for (String line = r.readLine(); line != null; line =r.readLine()){

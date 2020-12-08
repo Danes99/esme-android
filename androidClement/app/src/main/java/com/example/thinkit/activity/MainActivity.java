@@ -34,6 +34,18 @@ public class MainActivity extends AppCompatActivity {
         JSONArray response = api.readArticles(token);
         Log.v("Articles", String.valueOf(response));
 
+        /*
+        // Patch article
+        JSONObject patchedArticle = api.updateArticle(
+                "5fcf893523666e0017ca6307",
+                null,
+                null,
+                true,
+                token
+        );
+
+        Log.v("patchedArticle", String.valueOf(patchedArticle));
+         */
 
     }
 }
