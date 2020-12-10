@@ -12,8 +12,8 @@
         android:padding="20dp">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@drawable/ic_user"
             android:layout_marginLeft="10dp"></ImageView>
         <LinearLayout
@@ -21,21 +21,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="20dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name : "
+                android:id="@+id/name"
                 android:textSize="20dp"></TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email : "
+                android:id="@+id/mail"
                 android:textSize="20dp"></TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Join on : "
+                android:id="@+id/createdAt"
                 android:textSize="20dp"></TextView>
 
         </LinearLayout>
@@ -59,6 +62,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/red"
             android:text="Log out"
+            android:id="@+id/logout"
             android:layout_gravity="right"
             android:layout_marginLeft="10dp"></Button>
     </LinearLayout>

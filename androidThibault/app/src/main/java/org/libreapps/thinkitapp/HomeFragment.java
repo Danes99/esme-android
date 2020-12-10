@@ -77,13 +77,15 @@ public class HomeFragment extends Fragment {
         layout_article.removeAllViewsInLayout();
         //layout_article.addView(readArticle,paramsContaint);
 
-
+        int boucle = response.length()-1;
         for(int i = 0; i < response.length(); i++)
         {
             //get title and content from web database
+
             JSONObject article = null;
             try {
-                article = response.getJSONObject(i);
+                article = response.getJSONObject(boucle);
+                boucle = boucle-1;
             } catch (JSONException e) {
                 e.printStackTrace();
             }

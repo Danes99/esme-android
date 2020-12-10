@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.menu_add:
                     selectedFragment = new AddFragment(token);
                     break;
-               case R.id.menu_like:
-                    selectedFragment = new LikeFragment();
-                    break;
                 case R.id.menu_user:
                     selectedFragment = new UserFragment(token, user);
                     break;
