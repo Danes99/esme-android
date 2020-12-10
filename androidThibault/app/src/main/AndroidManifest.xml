@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.libreapps.thinkit">
+    package="org.libreapps.thinkitapp">
+
+    //Network security access
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="false"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ThinKIT">
-        <activity android:name=".UserPost"></activity>
-        <activity android:name=".LikePost" />
-        <activity android:name=".AddPost" />
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.ThinKITApp"
+        android:usesCleartextTraffic="true">
+        //clement
+        <activity android:name=".activity.OpenApplicationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.SignupActivity"></activity>
+        <activity android:name=".activity.LoginActivity"></activity>
+
+        //thibault
+        <activity android:name=".activity.ReadActivity"></activity>
+        <activity android:name=".activity.MainActivity">
+
         </activity>
     </application>
 
