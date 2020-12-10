@@ -9,10 +9,6 @@
         android:icon="@drawable/ic_add"
         android:title="@string/title_menu_add"></item>
 
-    <item android:id="@+id/menu_like"
-        android:icon="@drawable/ic_edit"
-        android:title="@string/title_menu_like"></item>
-
     <item android:id="@+id/menu_user"
         android:icon="@drawable/ic_user"
         android:title="@string/title_menu_user"></item>
