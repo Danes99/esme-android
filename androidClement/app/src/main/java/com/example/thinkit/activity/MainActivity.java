@@ -7,13 +7,8 @@ import android.util.Log;
 
 import com.example.thinkit.R;
 import com.example.thinkit.connection.APIThinkit;
-import com.example.thinkit.connection.connectionREST;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         // List of articles
         JSONArray response = api.readArticles(token);
         Log.v("Articles", String.valueOf(response));
+
+        Boolean logout = api.logout();
+        Log.v("Logout", String.valueOf(logout));
 
         /*
         // Patch article

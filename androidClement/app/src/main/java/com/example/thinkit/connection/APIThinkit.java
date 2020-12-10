@@ -89,6 +89,31 @@ public class APIThinkit {
         return json;
     }
 
+    public Boolean logout() {
+
+        // Request parameters
+        String url = "http://node-thinkit.herokuapp.com/users/logout";
+        String method = "POST";
+        String response = null;
+
+        connectionREST connection = new connectionREST(url, method, null);
+        connection.execute((Object) null);
+        
+        try {
+
+            // Synchronus Method
+            // Wait for the response
+            response = (String) connection.get();
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
     public JSONArray readArticles(String token) {
 
         // Request parameters

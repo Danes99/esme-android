@@ -120,9 +120,6 @@ public class connectionREST extends AsyncTask {
 
         Log.v("POST @", url.toString());
 
-        // Creating a custom JSON String
-        String jsonInputString = json.toString();
-
         HttpURLConnection connection = null;
 
         // Open a connection(?) on the URL(??) and cast the response(???)
@@ -142,9 +139,14 @@ public class connectionREST extends AsyncTask {
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
-            // Write request body
-            OutputStream os = connection.getOutputStream();
-            writeStream(os, jsonInputString);
+            if (json != null) {
+                // Creating a custom JSON String
+                String jsonInputString = json.toString();
+
+                // Write request body
+                OutputStream os = connection.getOutputStream();
+                writeStream(os, jsonInputString);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -156,9 +158,6 @@ public class connectionREST extends AsyncTask {
     private HttpURLConnection patch(URL url, JSONObject json) {
 
         Log.v("PATCH @", url.toString());
-
-        // Creating a custom JSON String
-        String jsonInputString = json.toString();
 
         HttpURLConnection connection = null;
 
@@ -180,9 +179,14 @@ public class connectionREST extends AsyncTask {
             connection.setDoInput(true);
             connection.setDoOutput(true);
 
-            // Write request body
-            OutputStream os = connection.getOutputStream();
-            writeStream(os, jsonInputString);
+            if (json != null) {
+                // Creating a custom JSON String
+                String jsonInputString = json.toString();
+
+                // Write request body
+                OutputStream os = connection.getOutputStream();
+                writeStream(os, jsonInputString);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
