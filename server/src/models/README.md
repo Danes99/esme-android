@@ -18,18 +18,19 @@ This the relational model for mongoDB (mongoose).
 
 - _id: 16-bits integer
 - age: integer
-- name: string,
-- email: string,
-- password: string,
+- name: string
+- email: string
+- password: string
 - tokens: array of string (JSON Web Token)
-- createdAt: UTC Date,
-- updatedAt: UTC Date,
+- createdAt: UTC Date
+- updatedAt: UTC Date
 - __v: integer (variable specific to MongoDB)
 
 # Article
 ```JSON
 {
     "completed": false,
+    "isFavorite": false,
     "_id": "5fb3b9902aae9a1eab9afa1a",
     "title": "New York Times",
     "content": "This is some awesome content!",
@@ -39,11 +40,12 @@ This the relational model for mongoDB (mongoose).
     "__v": 0
 }
 ```
-- completed: boolean,
+- completed: boolean
+- isFavorite: boolean
 - _id: 16-bits integer
-- title: string,
-- content: string,
-- owner: 16-bits integer (foreign key),
-- createdAt: UTC Date,
-- updatedAt: UTC Date,
+- title: string
+- content: string
+- owner: 16-bits integer (foreign key)
+- createdAt: UTC Date
+- updatedAt: UTC Date
 - __v: integer (variable specific to MongoDB)
